@@ -89,33 +89,44 @@
 
     <script src="https://maps.googleapis.com/maps/api/js"></script>
     <script>
-      function initialize(){
-        var mapMarker ={
-          url: "http://icons.iconarchive.com/icons/icons-land/vista-map-markers/256/Map-Marker-Flag-2-Right-Azure-icon.png"
-        }
+    function initialize(){
+      var getLat = document.querySelector("#lat").innerHTML;
+      var getLong = document.querySelector("#long").innerHTML;
+      console.log(getLat);
+      var lat = parseFloat(getLat);
+      console.log(lat);
+      var long = parseFloat(getLong);
 
-        var getLat = document.querySelector("#lat").innerHTML;
-        var getLong = document.querySelector("#long").innerHTML;
+      var evtLocation = new google.maps.LatLng(lat,long);
 
-        var lat = parseFloat(getLat);
-        var long = parseFloat(getLong);
-
-        var displayMap = {
-        center : new google.maps.LatLng(lat, long),
-        //center : marker,
+      var displayMap = {
+        center : evtLocation,
         zoom : 14,
         mapTypeId : google.maps.MapTypeId.ROADMAP
-        };
-        // var myCenter = (lat, long);
-        // var marker = new google.maps.LatLng({
-        //   position: myCenter,
-        //   icon: floatingJames
-        // });
-        var map = new google.maps.Map(document.getElementById("map"), displayMap);
-        marker.setMap(displayMap);
+      };
+
+      var map = new google.maps.Map(document.getElementById("map"), displayMap);
+
+      var mapMarker = {
+        url:'http://www.goughmap.org/_a/cms_page_media/29/red_marker_1.png'
       }
 
-      google.maps.event.addDomListener(window, 'load', initialize);
+      var marker = new google.maps.Marker({
+        position: evtLocation,
+        map: map,
+        icon: mapMarker
+      });
+      // var marker = new google.maps.Marker({
+      //   position: evtLocation,
+      //   map: map,
+      //   title: 'Hello World!'
+      // });
+
+      marker.setMap(displayMap);
+    }
+
+    google.maps.event.addDomListener(window, 'load', initialize);
+
     </script>
   </head>
 
