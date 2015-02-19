@@ -1,0 +1,167 @@
+<html>
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href='http://fonts.googleapis.com/css?family=Poiret+One|Raleway:700,900,400|Montserrat' rel='stylesheet' type='text/css'>
+  <style>
+  form{
+    font-size:20px;
+    font-family: 'Raleway', sans-serif;
+    color:white;
+  }
+  h2{
+    font-family: 'Poiret One', cursive;
+    color:white;
+    text-shadow: 0 5px 10px #808080;
+  }
+  h1{
+    font-family: 'Raleway', sans-serif;
+    font-weight: 400;
+    color:white;
+    text-shadow: 0 5px 10px #808080;
+  }
+  .brand{
+    font-family: 'Poiret One', cursive;
+    font-weight:bold;
+    color:#696969;
+    text-shadow: 0 5px 10px #808080;
+    font-size:60px;
+  }
+  h3{
+    font-family: 'Poiret One', cursive;
+    font-weight:bold;
+    color:white;
+  }
+  a{
+    font-weight:bold;
+  }
+  body{
+    background-color:#74AFAD;
+    /*this is change color*/
+
+  }
+  button{
+    color:white;
+    background-color:#ff7900;
+    border-radius:5px;
+    font-size:15px;
+    /*this is change color*/
+  }
+  .fliter{
+    background-color:#C0C0C0;
+    border-radius:5px;
+    color:black;
+    /*this is change color*/
+  }
+  .fliterbutton{
+    color:white;
+    background-color:#ff7900;
+    border-radius:5px;
+    /*this is change color*/
+  }
+  .logout{
+    margin-top:20px;
+    font-size:14px;
+  }
+  .list{
+    margin-top:20px;
+    font-size:18px;
+  }
+</style>
+</head>
+
+<body>
+
+  <!-- <div class="container">
+  <div class="row">
+  <div class="col-md-8 col-md-offset-10">
+  <form action='/logout' method="POST">
+  <input type="hidden" name="_method" value="PUT">
+  <button>Log out</button>
+</form>
+
+<a href='/favorite'>My Favorite List</a>
+</div>
+</div>
+</div> -->
+
+
+<div class="container">
+
+  <div class="row">
+    <div class="col-md-10">
+      <h1 class="brand"> Bored-NYC </h1>
+    </div>
+    <div class="col-md-2">
+      <form class="logout" action='/logout' method="POST">
+        <input type="hidden" name="_method" value="PUT">
+        <button>Log out</button>
+      </form>
+      <a class="list" href='/favorite'>My Favorite List</a>
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="col-md-6 col-md-offset-4"></div>
+    <h1>Daily Events Page</h1>
+    <% response.each do |object| %>
+    <form action="/save" method="POST">
+      <input type="hidden" name="name" value="<%= object['event_name'] %>">
+      <input type="hidden" name="address" value="<%= object['street_address'] %>">
+      <input type="hidden" name="city" value="<%= object['city'] %>">
+      <input type="hidden" name="state" value="<%= object['state'] %>">
+      <input type="hidden" name="telephone" value="<%= object['telephone'] %>">
+      <input type="hidden" name="detail" value="<%= object['event_detail_url'] %>">
+      <input type="hidden" name="description" value="<%= object['web_description'] %>">
+      <input type="hidden" name="date" value="<%= object['date_time_description'] %>">
+      <h2><%= object["event_name"] %></h2>
+      <p>Located:</br>
+        <%= object["street_address"] %><br>
+        <%= object["city"] %>
+        <%= object["state"] %><br>
+        Phone: <%= object["telephone"] %><br>
+      </br>
+      <a href="<%= object["event_detail_url"] %>">Events Detail</a></p>
+      <br>
+      <p>Event Description: <%= object["web_description"] %></p>
+      <p>Dates Available: <%= object["date_time_description"] %></p><br>
+      <button>Save this Event</button>
+      <!-- <hr> -->
+    </form>
+    <form action="/map" method="POST">
+      <input type="hidden" name="name" value="<%= object['event_name'] %>">
+      <input type="hidden" name="address" value="<%= object['street_address'] %>">
+      <input type="hidden" name="city" value="<%= object['city'] %>">
+      <input type="hidden" name="state" value="<%= object['state'] %>">
+      <input type="hidden" name="lat" value="<%= object['geocode_latitude'] %>">
+      <input type="hidden" name="long" value="<%= object['geocode_longitude'] %>">
+      <button>Map it</button>
+      <hr>
+    </form>
+    <% end %>
+  </div>
+ </div>
+
+
+
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-4">
+    <div id="filter">
+      <form action="/selected" method="POST"><h3>*Select a date for upcoming events*</h3>
+        <input class= "fliter" type="date" name="selected_date">
+        <input class= "fliterbutton" type="submit" value="Send">
+      </form>
+    </div>
+  </div>
+ </div>
+</div>
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+</body>
+</html>

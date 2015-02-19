@@ -1,0 +1,160 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='http://fonts.googleapis.com/css?family=Poiret+One|Raleway:700,900,400|Montserrat' rel='stylesheet' type='text/css'>
+    <style>
+    #map {
+      height: 600px;
+      width: 800px;
+    }
+    span {
+      visibility: hidden;
+    }
+    .brand{
+      font-family: 'Poiret One', cursive;
+      font-weight:bold;
+      color:#696969;
+      text-shadow: 0 5px 10px #808080;
+      font-size:60px;
+    }
+
+    p{
+      font-size:20px;
+      font-family: 'Raleway', sans-serif;
+      color:white;
+    }
+    h2{
+      font-family: 'Poiret One', cursive;
+      color:white;
+      text-shadow: 0 5px 10px #808080;
+    }
+    h1{
+      font-family: 'Raleway', sans-serif;
+      font-weight: 400;
+      color:white;
+      text-shadow: 0 5px 10px #808080;
+    }
+    .brand{
+      font-family: 'Poiret One', cursive;
+      font-weight:bold;
+      color:#696969;
+      text-shadow: 0 5px 10px #808080;
+      font-size:60px;
+    }
+    h3{
+      font-family: 'Poiret One', cursive;
+      font-weight:bold;
+      color:white;
+    }
+    a{
+      font-weight:bold;
+    }
+    body{
+      background-color:#74AFAD;
+    }
+    button{
+      color:white;
+      background-color:#ff7900;
+      border-radius:5px;
+      font-size:15px;
+    }
+    .fliter {
+      background-color:#C0C0C0;
+      border-radius:5px;
+      color:black;
+    }
+    .fliterbutton{
+      color:black;
+      background-color:#ff7900;
+      border-radius:5px;
+    }
+    .logout{
+      margin-top:20px;
+      font-size:14px;
+    }
+    .list{
+      margin-top:20px;
+      font-size:18px;
+    }
+    #pre_page{
+      font-size:18px;
+    }
+    hr{
+      width:800px;
+    }
+    </style>
+
+
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
+    <script>
+      function initialize(){
+        var mapMarker ={
+          url: "http://icons.iconarchive.com/icons/icons-land/vista-map-markers/256/Map-Marker-Flag-2-Right-Azure-icon.png"
+        }
+
+        var getLat = document.querySelector("#lat").innerHTML;
+        var getLong = document.querySelector("#long").innerHTML;
+
+        var lat = parseFloat(getLat);
+        var long = parseFloat(getLong);
+
+        var displayMap = {
+        center : new google.maps.LatLng(lat, long),
+        //center : marker,
+        zoom : 14,
+        mapTypeId : google.maps.MapTypeId.ROADMAP
+        };
+        // var myCenter = (lat, long);
+        // var marker = new google.maps.LatLng({
+        //   position: myCenter,
+        //   icon: floatingJames
+        // });
+        var map = new google.maps.Map(document.getElementById("map"), displayMap);
+        marker.setMap(displayMap);
+      }
+
+      google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+  </head>
+
+
+  <body>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-10">
+          <h1 class="brand"> Bored-NYC </h1>
+        </div>
+        <div class="col-md-2">
+          <form class="logout" action='/logout' method="POST">
+            <input type="hidden" name="_method" value="PUT">
+            <button>Log out</button>
+          </form>
+          <a class="list" href='/favorite'>My Favorite List</a>
+        </div>
+      </div>
+
+
+      <div class="row">
+      <div class="col-md-4 col-md-offset-2">
+      <h2> Map It </h2>
+      <p>Located:<br>
+      <%= object[:address] %><br>
+      <%= object[:city] %>
+      <%= object[:state] %></p><br>
+
+    <span id="lat"><%= object[:lat] %></span>
+    <span id="long"><%= object[:long] %></span>
+
+    <div id="map">
+    </div>
+    <hr>
+    <a id="pre_page" href='/events'>Back to Events</a>
+  </div>
+</div>
+
+  </body>
+
+</html>
